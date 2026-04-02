@@ -71,7 +71,6 @@ app.post("/api/auth/phone/verify-code", async (c) => {
 app.get("/app", async (c) => {
 	const url = new URL(c.req.url);
 	url.pathname = "/";
-	url.search = "";
 	return (c.env as Env & { ASSETS: Fetcher }).ASSETS.fetch(
 		new Request(url.toString(), c.req.raw),
 	);
@@ -80,7 +79,6 @@ app.get("/app", async (c) => {
 app.get("/app/*", async (c) => {
 	const url = new URL(c.req.url);
 	url.pathname = "/";
-	url.search = "";
 	return (c.env as Env & { ASSETS: Fetcher }).ASSETS.fetch(
 		new Request(url.toString(), c.req.raw),
 	);

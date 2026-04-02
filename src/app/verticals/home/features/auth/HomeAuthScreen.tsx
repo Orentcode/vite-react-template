@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
-import type { Session, User } from "@supabase/supabase-js";
+import type { Session } from "@supabase/supabase-js";
 import { AuthActionButton } from "./components/AuthActionButton";
 import { PhoneLoginForm } from "./components/PhoneLoginForm";
 import { HomeOnboardingFlow } from "../onboarding/HomeOnboardingFlow";
 import {
+	clearAuthReturnToFromUrl,
+	getAuthReturnToFromUrl,
 	getSupabaseRedirectUrl,
 	isSupabaseConfigured,
 	supabase,
@@ -24,23 +26,12 @@ function PhoneMark() {
 	return <span className="provider-mark phone-mark">#</span>;
 }
 
-function isLikelyNewUser(user: User) {
-	const createdAt = Date.parse(user.created_at ?? "");
-	const lastSignInAt = Date.parse(user.last_sign_in_at ?? "");
-
-	if (Number.isNaN(createdAt) || Number.isNaN(lastSignInAt)) {
-		return false;
-	}
-
-	return Math.abs(lastSignInAt - createdAt) < 30_000;
-}
-
 export function HomeAuthScreen() {
 	const intent =
 		new URLSearchParams(window.location.search).get("intent") === "signup"
 			? "signup"
 			: "login";
-	const [stage, setStage] = useState<"auth" | "profile" | "welcome" | "onboarding">("auth");
+	const [stage, setStage] = useState<"auth" | "profile" | "onboarding">("auth");
 	const [session, setSession] = useState<Session | null>(null);
 	const [phoneNumber, setPhoneNumber] = useState("");
 	const [passcode, setPasscode] = useState("");
@@ -57,16 +48,26 @@ export function HomeAuthScreen() {
 		[session],
 	);
 
+	function maybeRestoreAuthReturnTo() {
+		const returnTo = getAuthReturnToFromUrl();
+		clearAuthReturnToFromUrl();
+
+		if (!returnTo) {
+			return;
+		}
+
+		const currentPath = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+
+		if (returnTo !== currentPath) {
+			window.history.replaceState({}, "", returnTo);
+		}
+	}
+
 	function resolvePostAuthStage(nextSession: Session) {
 		const metadata = nextSession.user.user_metadata as Record<string, unknown> | undefined;
 		const hasCompletedProfile = metadata?.profile_completed === true;
 
-		if (intent === "signup") {
-			if (hasCompletedProfile || !isLikelyNewUser(nextSession.user)) {
-				setStage("welcome");
-				return;
-			}
-
+		if (!hasCompletedProfile) {
 			const fullName =
 				typeof metadata?.full_name === "string" && metadata.full_name.trim()
 					? metadata.full_name.trim()
@@ -78,7 +79,7 @@ export function HomeAuthScreen() {
 			return;
 		}
 
-		setStage("welcome");
+		setStage("onboarding");
 	}
 
 	useEffect(() => {
@@ -89,6 +90,7 @@ export function HomeAuthScreen() {
 		void supabase.auth.getSession().then(({ data }) => {
 			if (data.session) {
 				setSession(data.session);
+				maybeRestoreAuthReturnTo();
 				resolvePostAuthStage(data.session);
 			}
 		});
@@ -98,6 +100,7 @@ export function HomeAuthScreen() {
 		} = supabase.auth.onAuthStateChange((event, session) => {
 			if (event === "SIGNED_IN" && session) {
 				setSession(session);
+				maybeRestoreAuthReturnTo();
 				resolvePostAuthStage(session);
 			}
 
@@ -173,7 +176,7 @@ export function HomeAuthScreen() {
 
 		setIsSavingProfile(false);
 		setStatusMessage("Profile saved. Welcome to Vidnavi Home.");
-		setStage("welcome");
+		setStage("onboarding");
 	}
 
 	async function handleOAuthSignIn(provider: "google" | "apple") {
@@ -254,25 +257,6 @@ export function HomeAuthScreen() {
 									onClick={() => void handleProfileCompletion()}
 								>
 									{isSavingProfile ? "Saving..." : "Save and continue"}
-								</button>
-							</div>
-						</>
-					) : stage === "welcome" ? (
-						<>
-							<div className="auth-panel-header">
-								<p className="eyebrow">Welcome back</p>
-								<h2>{viewer ? `Welcome, ${viewer.firstName}.` : "Welcome back."}</h2>
-								<p>
-									Your account is ready. Continue into your home setup flow.
-								</p>
-							</div>
-							<div className="auth-profile-card">
-								<button
-									type="button"
-									className="auth-profile-submit"
-									onClick={() => setStage("onboarding")}
-								>
-									Continue to home app
 								</button>
 							</div>
 						</>
