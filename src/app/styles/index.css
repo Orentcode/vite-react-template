@@ -1,0 +1,81 @@
+:root {
+	font-family: "IBM Plex Sans", "Avenir Next", "Segoe UI", sans-serif;
+	line-height: 1.5;
+	font-weight: 400;
+	color: #eaf8ef;
+	--bg-radial-a: rgba(111, 229, 172, 0.26);
+	--bg-radial-b: rgba(116, 190, 255, 0.18);
+	--bg-stop-a: #04120b;
+	--bg-stop-b: #0a2317;
+	--bg-stop-c: #102d22;
+	background:
+		radial-gradient(circle at 18% 10%, var(--bg-radial-a) 0%, rgba(111, 229, 172, 0) 36%),
+		radial-gradient(circle at 82% 84%, var(--bg-radial-b) 0%, rgba(116, 190, 255, 0) 40%),
+		linear-gradient(155deg, var(--bg-stop-a) 0%, var(--bg-stop-b) 46%, var(--bg-stop-c) 100%);
+
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	scroll-behavior: smooth;
+}
+
+a {
+	font-weight: 600;
+	color: inherit;
+	text-decoration: inherit;
+}
+
+body {
+	margin: 0;
+	min-width: 320px;
+	min-height: 100vh;
+	background: transparent;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+button,
+input,
+textarea,
+select {
+	font-family: inherit;
+}
+
+a:focus-visible,
+button:focus-visible {
+	outline: 2px solid #bffb8a;
+	outline-offset: 3px;
+}
+
+	::selection {
+	background: rgba(126, 240, 169, 0.35);
+	color: #f8fcfd;
+}
+
+:root[data-theme="cool"] {
+	--bg-radial-a: rgba(120, 210, 255, 0.25);
+	--bg-radial-b: rgba(111, 229, 172, 0.16);
+	--bg-stop-a: #051120;
+	--bg-stop-b: #0a2234;
+	--bg-stop-c: #133141;
+}
+
+:root[data-theme="dusk"] {
+	--bg-radial-a: rgba(255, 177, 109, 0.22);
+	--bg-radial-b: rgba(253, 121, 168, 0.16);
+	--bg-stop-a: #1b0f14;
+	--bg-stop-b: #2a1620;
+	--bg-stop-c: #3a2330;
+}
+
+:root[data-theme="light"] {
+	--bg-radial-a: rgba(167, 181, 201, 0.28);
+	--bg-radial-b: rgba(202, 212, 228, 0.34);
+	--bg-stop-a: #e9edf4;
+	--bg-stop-b: #e2e8f1;
+	--bg-stop-c: #d6dde8;
+	color: #243244;
+}

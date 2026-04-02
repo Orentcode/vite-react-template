@@ -1,0 +1,20 @@
+#!/bin/sh
+
+if [ "$SKIP_AI_REVIEW" = "1" ]; then
+	echo "Skipping AI review because SKIP_AI_REVIEW=1."
+	exit 0
+fi
+
+if git diff --cached --quiet -- .; then
+	exit 0
+fi
+
+if ! command -v cr >/dev/null 2>&1; then
+	echo "CodeRabbit CLI not found. Install it first to enable local AI review:"
+	echo "curl -fsSL https://cli.coderabbit.ai/install.sh | sh"
+	echo "Then run: cr auth login"
+	exit 0
+fi
+
+echo "Running local AI review with CodeRabbit..."
+cr --type uncommitted --base main --plain

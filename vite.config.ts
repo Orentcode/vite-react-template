@@ -1,7 +1,15 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { cloudflare } from "@cloudflare/vite-plugin";
+import { File as NodeFile } from "node:buffer";
 
-export default defineConfig({
-	plugins: [react(), cloudflare()],
+if (typeof globalThis.File === "undefined") {
+	globalThis.File = NodeFile as typeof File;
+}
+
+export default defineConfig(async () => {
+	const { cloudflare } = await import("@cloudflare/vite-plugin");
+
+	return {
+		plugins: [react(), cloudflare({ inspectorPort: false })],
+	};
 });

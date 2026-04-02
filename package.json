@@ -40,8 +40,11 @@
 		"check": "tsc && vite build && wrangler deploy --dry-run",
 		"deploy": "npm run build && wrangler deploy",
 		"dev": "vite",
+		"enable:review-hook": "git config core.hooksPath .githooks",
 		"lint": "eslint .",
-		"preview": "npm run build && vite preview"
+		"preview": "npm run build && vite preview",
+		"review:local": "cr --type uncommitted --base main --plain",
+		"review:local:agent": "cr --prompt-only --type uncommitted --base main"
 	},
 	"type": "module"
 }

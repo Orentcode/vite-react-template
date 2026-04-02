@@ -1,0 +1,23 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="128" height="128" rx="28" fill="#102D22"/>
+
+  <!-- eye outline -->
+  <path d="M20 64C30 46 47 36 64 36C81 36 98 46 108 64C98 82 81 92 64 92C47 92 30 82 20 64Z"
+        stroke="#EAF8EF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- iris / pupil -->
+  <circle cx="64" cy="64" r="14" stroke="#8CF0BA" stroke-width="6"/>
+  <circle cx="64" cy="64" r="3.2" fill="#8CF0BA"/>
+
+  <!-- radiant lashes / lines -->
+  <path d="M64 17V28" stroke="#EAF8EF" stroke-width="5" stroke-linecap="round"/>
+  <path d="M47 20L51 30" stroke="#EAF8EF" stroke-width="5" stroke-linecap="round"/>
+  <path d="M81 20L77 30" stroke="#EAF8EF" stroke-width="5" stroke-linecap="round"/>
+  <path d="M30 34L39 40" stroke="#EAF8EF" stroke-width="5" stroke-linecap="round"/>
+  <path d="M98 34L89 40" stroke="#EAF8EF" stroke-width="5" stroke-linecap="round"/>
+  <path d="M30 94L39 88" stroke="#EAF8EF" stroke-width="5" stroke-linecap="round"/>
+  <path d="M98 94L89 88" stroke="#EAF8EF" stroke-width="5" stroke-linecap="round"/>
+  <path d="M47 108L51 98" stroke="#EAF8EF" stroke-width="5" stroke-linecap="round"/>
+  <path d="M81 108L77 98" stroke="#EAF8EF" stroke-width="5" stroke-linecap="round"/>
+  <path d="M64 111V100" stroke="#EAF8EF" stroke-width="5" stroke-linecap="round"/>
+</svg>
