@@ -56,6 +56,57 @@ npm run dev
 
 Your application will be available at [http://localhost:5173](http://localhost:5173).
 
+## Auth Redirect Setup (Local + Production)
+
+### In Code (already handled)
+
+- Entry links use relative URLs (`/?surface=home&intent=signup|login`).
+- OAuth `redirectTo` includes:
+  - `surface=home`
+  - `intent=signup|login`
+  - `returnTo=<relative-path>` for deep-link restoration after auth.
+- Local host detection supports `localhost`, `127.0.0.1`, `::1`, and `.local`.
+- Worker `/app` rewrites preserve query strings.
+
+### Local `.env.local`
+
+Set:
+
+```bash
+VITE_SUPABASE_URL=https://<your-project-ref>.supabase.co
+VITE_SUPABASE_ANON_KEY=<your-anon-key>
+```
+
+Optional:
+
+- Leave `VITE_SUPABASE_REDIRECT_URL` unset for local development.
+- If you set it, use a local origin callback URL.
+
+### Supabase Dashboard (required)
+
+In `Authentication -> URL Configuration`:
+
+- Add Redirect URLs:
+  - `http://localhost:5173/*`
+  - `http://127.0.0.1:5173/*`
+  - `http://localhost:5174/*`
+  - `http://127.0.0.1:5174/*`
+  - `https://<your-prod-domain>/*`
+
+In `Authentication -> Providers`:
+
+- Enable Google and Apple providers with valid credentials.
+
+### Production env
+
+Set:
+
+```bash
+VITE_SUPABASE_REDIRECT_URL=https://<your-prod-domain>/?surface=home
+VITE_PRIMARY_SITE_URL=https://<your-prod-domain>
+VITE_HOME_APP_URL=https://<your-prod-domain>
+```
+
 ## Production
 
 Build your project for production:

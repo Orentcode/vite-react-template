@@ -1,6 +1,14 @@
 const FALLBACK_DEV_URL = "https://dev.vidnavi.com";
 
-export const primarySiteUrl =
-	import.meta.env.VITE_PRIMARY_SITE_URL ?? FALLBACK_DEV_URL;
+function getRuntimeFallbackUrl() {
+	if (typeof window !== "undefined") {
+		return window.location.origin;
+	}
 
-export const homeAppUrl = import.meta.env.VITE_HOME_APP_URL ?? FALLBACK_DEV_URL;
+	return FALLBACK_DEV_URL;
+}
+
+export const primarySiteUrl =
+	import.meta.env.VITE_PRIMARY_SITE_URL ?? getRuntimeFallbackUrl();
+
+export const homeAppUrl = import.meta.env.VITE_HOME_APP_URL ?? getRuntimeFallbackUrl();
