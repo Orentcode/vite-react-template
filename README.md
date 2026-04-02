@@ -82,6 +82,37 @@ Monitor your workers:
 npx wrangler tail
 ```
 
+## AI Review
+
+This repo is set up to use CodeRabbit for local reviews before commits and for automatic pull request reviews on GitHub.
+
+Install the CLI and run a local review:
+
+```bash
+curl -fsSL https://cli.coderabbit.ai/install.sh | sh
+cr auth login
+npm run review:local
+```
+
+For agent-friendly output that you can hand back to me or another coding agent:
+
+```bash
+npm run review:local:agent
+```
+
+If you want review to run automatically before commits, enable the included hook:
+
+```bash
+npm run enable:review-hook
+```
+
+Notes:
+
+- The hook runs `cr --type uncommitted`, so it reviews the current working tree instead of only staged hunks.
+- Use `SKIP_AI_REVIEW=1 git commit ...` if you need to bypass the hook once.
+- Install the CodeRabbit GitHub App for this repository to enable automatic PR reviews.
+- Shared review defaults live in `.coderabbit.yaml`.
+
 ## Additional Resources
 
 - [Cloudflare Workers Documentation](https://developers.cloudflare.com/workers/)

@@ -59,9 +59,11 @@ export function PhoneLoginForm({
 						Send passcode
 					</button>
 				)}
-				<button className="phone-auth-secondary" type="button" onClick={onRequestCode}>
-					Resend code
-				</button>
+				{isCodeSent && (
+					<button className="phone-auth-secondary" type="button" onClick={onRequestCode}>
+						Resend code
+					</button>
+				)}
 			</div>
 		</div>
 	);

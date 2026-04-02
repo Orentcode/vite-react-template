@@ -28,6 +28,14 @@ app.get("/api/auth/providers", (c) =>
 app.post("/api/auth/phone/request-code", async (c) => {
 	const body = await c.req.json().catch(() => null);
 
+	if (!body?.phoneNumber) {
+		return c.json({
+			ok: false,
+			status: "error",
+			message: "Missing phone number payload."
+		}, 400);
+	}
+
 	return c.json({
 		ok: true,
 		status: "stubbed",
@@ -40,6 +48,14 @@ app.post("/api/auth/phone/request-code", async (c) => {
 app.post("/api/auth/phone/verify-code", async (c) => {
 	const body = await c.req.json().catch(() => null);
 
+	if (!body?.phoneNumber || !body?.code) {
+		return c.json({
+			ok: false,
+			status: "error",
+			message: "Missing phone number or verification code."
+		}, 400);
+	}
+
 	return c.json({
 		ok: true,
 		status: "stubbed",
@@ -48,6 +64,26 @@ app.post("/api/auth/phone/verify-code", async (c) => {
 		phoneNumber: body?.phoneNumber ?? null,
 		code: body?.code ? "received" : null,
 	});
+});
+
+// Local/dev and production deep-link support for the home app surface.
+// Rewrites /app and /app/* to the SPA entry so client-side routing can resolve.
+app.get("/app", async (c) => {
+	const url = new URL(c.req.url);
+	url.pathname = "/";
+	url.search = "";
+	return (c.env as Env & { ASSETS: Fetcher }).ASSETS.fetch(
+		new Request(url.toString(), c.req.raw),
+	);
+});
+
+app.get("/app/*", async (c) => {
+	const url = new URL(c.req.url);
+	url.pathname = "/";
+	url.search = "";
+	return (c.env as Env & { ASSETS: Fetcher }).ASSETS.fetch(
+		new Request(url.toString(), c.req.raw),
+	);
 });
 
 export default app;

@@ -4,6 +4,7 @@ type AuthActionButtonProps = {
 	icon: ReactNode;
 	label: string;
 	hint: string;
+	disabled?: boolean;
 	onClick?: () => void;
 };
 
@@ -11,10 +12,11 @@ export function AuthActionButton({
 	icon,
 	label,
 	hint,
+	disabled,
 	onClick,
 }: AuthActionButtonProps) {
 	return (
-		<button className="auth-action-button" type="button" onClick={onClick}>
+		<button className="auth-action-button" type="button" onClick={onClick} disabled={disabled}>
 			<span className="auth-action-icon" aria-hidden="true">
 				{icon}
 			</span>

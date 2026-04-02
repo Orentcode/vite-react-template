@@ -1,0 +1,18 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="128" height="128" rx="28" fill="#102D22"/>
+
+  <!-- V container -->
+  <path d="M22 30L56 98C59 103 69 103 72 98L106 30" stroke="#EAF8EF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- eye core -->
+  <path d="M38 66C45 54 54 48 64 48C74 48 83 54 90 66C83 78 74 84 64 84C54 84 45 78 38 66Z"
+        stroke="#8CF0BA" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="64" cy="66" r="4" fill="#8CF0BA"/>
+
+  <!-- radiant lashes -->
+  <path d="M64 40V48" stroke="#EAF8EF" stroke-width="4" stroke-linecap="round"/>
+  <path d="M49 43L53 50" stroke="#EAF8EF" stroke-width="4" stroke-linecap="round"/>
+  <path d="M79 43L75 50" stroke="#EAF8EF" stroke-width="4" stroke-linecap="round"/>
+  <path d="M30 56L37 60" stroke="#EAF8EF" stroke-width="4" stroke-linecap="round"/>
+  <path d="M98 56L91 60" stroke="#EAF8EF" stroke-width="4" stroke-linecap="round"/>
+</svg>
